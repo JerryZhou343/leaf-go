@@ -1,0 +1,44 @@
+// 定义项目 API 的 genproto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package leaf_go.v1;
+
+option go_package = "github.com/jerryzhou343/leaf-go/v1;leaf_go";
+option (gogoproto.goproto_getters_all) = false;
+
+service LeafGoService {
+  rpc Ping(.google.protobuf.Empty) returns (.google.protobuf.Empty);
+  rpc GetSegment(GetSegmentReq) returns (GetSegmentRsp) {
+    option (google.api.http) = {
+      post: "/api/segment/get"
+    };
+  };
+  rpc GetSnowflake(GetSnowflakeReq) returns (GetSnowflakeRsp) {
+    option (google.api.http) = {
+      post: "/api/snowflake/get"
+    };
+  };
+}
+
+message GetSegmentReq {
+  string key = 1;
+}
+
+message GetSegmentRsp {
+  string id = 1;
+}
+
+message GetSnowflakeReq {
+  string key = 1;
+}
+
+message GetSnowflakeRsp {
+  string id = 1;
+}
