@@ -50,7 +50,7 @@ func NewApp(svcHandler *rpc.Handler, g *warden.Server, config *conf.Config) (app
 		err = errors.New("server addr config error :" + config.Grpc.Addr)
 		return
 	}
-	addrs := []string{fmt.Sprintf("%s:%s", internalIP,addrInfo[1])}
+	addrs := []string{fmt.Sprintf("%s:%s", internalIP, addrInfo[1])}
 	ins := &naming.Instance{
 		Region:   env.Region,
 		Zone:     env.Zone,

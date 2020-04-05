@@ -9,22 +9,36 @@ import (
 
 // Config .
 type Config struct {
-	Redis *redis.Config
-	SQL   *sql.Config
-	Grpc  *warden.ServerConfig
+	Redis     *redis.Config
+	SQL       *sql.Config
+	Grpc      *warden.ServerConfig
+	App       *ApplicationConfig
+	Snowflake *SnowflakeConfig
+}
+
+type ApplicationConfig struct {
+}
+
+type SnowflakeConfig struct {
+	EtcdCluster []string
+	WorkerId    uint32
+	SrvName     string
 }
 
 func NewConf() (conf *Config, err error) {
 	var (
-		sqlct   paladin.TOML
-		rpcCt   paladin.TOML
-		redisCt paladin.TOML
+		sqlct         paladin.TOML
+		rpcCt         paladin.TOML
+		redisCt       paladin.TOML
+		applicationCt paladin.TOML
 	)
 
 	conf = &Config{
-		Redis: &redis.Config{},
-		SQL:   &sql.Config{},
-		Grpc:  &warden.ServerConfig{},
+		Redis:     &redis.Config{},
+		SQL:       &sql.Config{},
+		Grpc:      &warden.ServerConfig{},
+		App:       &ApplicationConfig{},
+		Snowflake: &SnowflakeConfig{},
 	}
 	//rpc server
 	if err = paladin.Get("grpc.toml").Unmarshal(&rpcCt); err != nil {
@@ -51,6 +65,17 @@ func NewConf() (conf *Config, err error) {
 	if err = redisCt.Get("Client").UnmarshalTOML(&conf.Redis); err != nil {
 		return
 	}
+	//application
+	if err = paladin.Get("application.toml").Unmarshal(&applicationCt); err != nil {
+		return
+	}
 
+	if err = applicationCt.Get("Application").UnmarshalTOML(&conf.App); err != nil {
+		return
+	}
+	//snowflake
+	if err = applicationCt.Get("Snowflake").UnmarshalTOML(&conf.Snowflake); err != nil {
+		return
+	}
 	return
 }

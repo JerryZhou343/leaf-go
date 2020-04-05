@@ -13,5 +13,3 @@ func NewAppQuery(demoRepo segment.Repo) *AppQuery {
 		demoRepo: demoRepo,
 	}
 }
-
-

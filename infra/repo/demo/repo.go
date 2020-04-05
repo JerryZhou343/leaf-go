@@ -9,5 +9,5 @@ type repo struct {
 }
 
 func NewRepo(conf *conf.Config) (segment.Repo, error) {
-	return &repo{},nil
+	return &repo{}, nil
 }

@@ -10,7 +10,7 @@ import "google/api/annotations.proto";
 // package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
 package leaf_go.v1;
 
-option go_package = "github.com/jerryzhou343/leaf-go/v1;leaf_go";
+option go_package                      = "leaf_go";
 option (gogoproto.goproto_getters_all) = false;
 
 service LeafGoService {
@@ -27,6 +27,7 @@ service LeafGoService {
   };
 }
 
+
 message GetSegmentReq {
   string key = 1;
 }
@@ -40,5 +41,5 @@ message GetSnowflakeReq {
 }
 
 message GetSnowflakeRsp {
-  string id = 1;
+  int64 id = 1;
 }

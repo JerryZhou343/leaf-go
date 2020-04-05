@@ -5,7 +5,8 @@ import_path: ./proto
 
 #当前项目依赖的proto文件
 protos:
-  - leafgo.proto
+  - leafgo_api.proto
+  - leafgo_error.proto
 #依赖导入目录
 includes:
   - $GOPATH/src/github.com/bilibili/kratos/third_party
@@ -28,5 +29,8 @@ generate:
   plugins:
     - name: gofast
       flags: plugins=grpc
+      output: ./genproto
+      type: go
+    - name: ecode
       output: ./genproto
 

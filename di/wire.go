@@ -11,5 +11,5 @@ import (
 )
 
 func InitApp() (*App, func(), error) {
-	panic(wire.Build(api.Provider, conf.NewConf, grpc.New, NewApp))
+	panic(wire.Build(conf.NewConf,api.Provider, grpc.New, NewApp))
 }
