@@ -22,4 +22,7 @@ var _ ecode.Codes
 // LeafGoErrCode ecode
 var (
 	LAST_TIME_GT_CURRENT_TIME = ecode.New(256)
+	ID_KEY_NOT_EXISTS         = ecode.New(257)
+	ID_ID_CACHE_INIT_FALSE    = ecode.New(258)
+	ID_TWO_SEGMENTS_ARE_NULL  = ecode.New(259)
 )

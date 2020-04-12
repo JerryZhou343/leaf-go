@@ -1,7 +1,7 @@
 package idgen
 
 import (
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake/util"
+	"github.com/jerryzhou343/leaf-go/domain/util"
 	stub "github.com/jerryzhou343/leaf-go/genproto"
 	"math/rand"
 	"time"

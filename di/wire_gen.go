@@ -9,9 +9,11 @@ import (
 	"github.com/jerryzhou343/leaf-go/api/rpc"
 	"github.com/jerryzhou343/leaf-go/app/executor/cmd"
 	"github.com/jerryzhou343/leaf-go/app/executor/query"
+	segment2 "github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
 	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake"
 	"github.com/jerryzhou343/leaf-go/infra/conf"
-	"github.com/jerryzhou343/leaf-go/infra/repo/demo"
+	"github.com/jerryzhou343/leaf-go/infra/driver/mysql"
+	"github.com/jerryzhou343/leaf-go/infra/repo/segment"
 	"github.com/jerryzhou343/leaf-go/infra/server/grpc"
 )
 
@@ -22,15 +24,17 @@ func InitApp() (*App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	db, err := mysql.NewMySQL(config)
+	if err != nil {
+		return nil, nil, err
+	}
+	repo := segment.NewRepo(db)
+	segmentImpl := segment2.NewSegmentImpl(repo)
 	snowflakeSnowflake, err := snowflake.NewSnowflake(config)
 	if err != nil {
 		return nil, nil, err
 	}
-	appCmd, err := cmd.NewAppCmd(config, snowflakeSnowflake)
-	if err != nil {
-		return nil, nil, err
-	}
-	repo, err := demo.NewRepo(config)
+	appCmd, err := cmd.NewAppCmd(config, segmentImpl, snowflakeSnowflake)
 	if err != nil {
 		return nil, nil, err
 	}

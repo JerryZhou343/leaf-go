@@ -33,7 +33,7 @@ message GetSegmentReq {
 }
 
 message GetSegmentRsp {
-  string id = 1;
+  int64 id = 1;
 }
 
 message GetSnowflakeReq {

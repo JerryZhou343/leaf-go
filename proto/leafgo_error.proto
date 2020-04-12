@@ -17,4 +17,7 @@ option go_package                      = "leaf_go";
 enum LeafGoErrCode{
     OK = 0;
     LAST_TIME_GT_CURRENT_TIME = 0x0100;
+    ID_KEY_NOT_EXISTS = 0x0101;
+    ID_ID_CACHE_INIT_FALSE = 0x0102;
+    ID_TWO_SEGMENTS_ARE_NULL = 0x0103;
 }
