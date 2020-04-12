@@ -10,25 +10,23 @@ import (
 	"time"
 )
 
-func main(){
+func main() {
 	var (
-		key string
+		key     string
 		rootCmd = &cobra.Command{}
 		segment = &cobra.Command{
-			Use:"segment",
+			Use: "segment",
 			Run: func(cmd *cobra.Command, args []string) {
-				if key != ""{
+				if key != "" {
 					TestSegment(key)
 				}
 			},
 		}
-
 	)
 	rootCmd.AddCommand(segment)
-	segment.PersistentFlags().StringVarP(&key,"key", "","","segment key")
+	segment.PersistentFlags().StringVarP(&key, "key", "", "", "segment key")
 	rootCmd.Execute()
 }
-
 
 func TestSegment(key string) {
 	var (
