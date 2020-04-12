@@ -10,6 +10,7 @@ require (
 	github.com/golang/protobuf v1.3.2
 	github.com/google/wire v0.4.0
 	github.com/pkg/errors v0.8.1
+	github.com/spf13/cobra v0.0.5
 	go.etcd.io/etcd v0.0.0-20190917205325-a14579fbfb1a
 	go.uber.org/atomic v1.4.0
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543

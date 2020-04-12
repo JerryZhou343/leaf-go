@@ -36,6 +36,6 @@ func (h *Handler) GetSnowflake(ctx context.Context, req *stub.GetSnowflakeReq) (
 
 func (h *Handler) GetSegment(ctx context.Context, req *stub.GetSegmentReq) (rsp *stub.GetSegmentRsp, err error) {
 	rsp = &stub.GetSegmentRsp{}
-	rsp.Id, err = h.cmdApp.GetSegmentID(ctx,req.Key)
+	rsp.Id, err = h.cmdApp.GetSegmentID(ctx, req.Key)
 	return
 }

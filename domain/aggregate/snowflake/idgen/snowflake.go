@@ -30,11 +30,11 @@ func NewSnowflakeIDGenImpl(workerID int64) (*SnowflakeIDGen, error) {
 		sequenceBits:  12,
 		workerIdBits:  10,
 		lastTimestamp: -1,
+		twepoch:       1288834974657,
 	}
 	ret.workerIdShift = ret.sequenceBits
 	ret.timestampLeftShift = ret.sequenceBits + ret.workerIdBits
-	ret.lastTimestamp = util.CurrentTimeMillis()
-	if ret.lastTimestamp > ret.timeGen() {
+	if ret.twepoch > util.CurrentTimeMillis() {
 		err = stub.LAST_TIME_GT_CURRENT_TIME
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func NewSnowflakeIDGenImpl(workerID int64) (*SnowflakeIDGen, error) {
 
 func (s *SnowflakeIDGen) Get(key string) (int64, error) {
 	//当前时间
-	timestamp := s.timeGen()
+	timestamp := util.CurrentTimeMillis()
 	if timestamp < s.lastTimestamp {
 		offset := s.lastTimestamp - timestamp
 		//当前时间晚于上一次更新时间
@@ -57,7 +57,7 @@ func (s *SnowflakeIDGen) Get(key string) (int64, error) {
 			waitDuration := time.Duration(offset<<1) * time.Millisecond
 			select {
 			case <-time.After(waitDuration):
-				timestamp = s.timeGen()
+				timestamp = util.CurrentTimeMillis()
 				if timestamp < s.lastTimestamp {
 					return 0, stub.LAST_TIME_GT_CURRENT_TIME
 				}
@@ -84,13 +84,9 @@ func (s *SnowflakeIDGen) Get(key string) (int64, error) {
 }
 
 func (s *SnowflakeIDGen) tilNextMillis(lastTimestamp int64) int64 {
-	timestamp := s.timeGen()
+	timestamp := util.CurrentTimeMillis()
 	for timestamp <= s.lastTimestamp {
-		timestamp = s.timeGen()
+		timestamp = util.CurrentTimeMillis()
 	}
 	return timestamp
-}
-
-func (s *SnowflakeIDGen) timeGen() int64 {
-	return time.Now().UnixNano() / 1000 / 1000
 }

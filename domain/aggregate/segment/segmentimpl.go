@@ -24,8 +24,8 @@ type SegmentImpl struct {
 
 func NewSegmentImpl(repo Repo) *SegmentImpl {
 	ret := &SegmentImpl{
-		repo: repo,
-		lock: &sync.Mutex{},
+		repo:  repo,
+		lock:  &sync.Mutex{},
 		cache: map[string]*entity.SegmentBuffer{},
 	}
 	ret.initOK = false
@@ -111,7 +111,7 @@ func (s *SegmentImpl) updateCacheFromDBAtEveryMinute() {
 	}()
 }
 
-func (s *SegmentImpl) Get(ctx context.Context,key string) (int64, error) {
+func (s *SegmentImpl) Get(ctx context.Context, key string) (int64, error) {
 	if !s.initOK {
 		return 0, leaf_go.ID_ID_CACHE_INIT_FALSE
 	}
@@ -120,19 +120,19 @@ func (s *SegmentImpl) Get(ctx context.Context,key string) (int64, error) {
 			func() {
 				s.lock.Lock()
 				defer s.lock.Unlock()
-				err := s.updateSegmentFromDB(ctx,key, buffer.GetCurrent())
+				err := s.updateSegmentFromDB(ctx, key, buffer.GetCurrent())
 				if err == nil {
 					buffer.SetInitOK(true)
 				}
 			}()
 
 		}
-		return s.getIdFromSegmentBuffer(ctx,s.cache[key])
+		return s.getIdFromSegmentBuffer(ctx, s.cache[key])
 	}
 	return 0, leaf_go.ID_KEY_NOT_EXISTS
 }
 
-func (s *SegmentImpl) getIdFromSegmentBuffer(ctx context.Context,buffer *entity.SegmentBuffer) (id int64, err error) {
+func (s *SegmentImpl) getIdFromSegmentBuffer(ctx context.Context, buffer *entity.SegmentBuffer) (id int64, err error) {
 	for {
 		buffer.Lock.RLock()
 		//获得当前的segment
@@ -143,7 +143,7 @@ func (s *SegmentImpl) getIdFromSegmentBuffer(ctx context.Context,buffer *entity.
 			buffer.ThreadRunning.CAS(false, true) { //切换线程运行状态
 			go func() {
 				next := buffer.Segments[buffer.NextPos()]
-				updateErr := s.updateSegmentFromDB(ctx,buffer.Key, next)
+				updateErr := s.updateSegmentFromDB(ctx, buffer.Key, next)
 				if updateErr == nil {
 					buffer.Lock.Lock()
 					buffer.NextReady = true
@@ -182,23 +182,23 @@ func (s *SegmentImpl) getIdFromSegmentBuffer(ctx context.Context,buffer *entity.
 }
 
 //updateSegmentFromDB 周期制造空洞
-func (s *SegmentImpl) updateSegmentFromDB(ctx context.Context,key string, segment *entity.Segment) (err error) {
+func (s *SegmentImpl) updateSegmentFromDB(ctx context.Context, key string, segment *entity.Segment) (err error) {
 	var (
 		leafAlloc *entity.LeafAlloc
 	)
 	buffer := segment.Buffer
 	if !buffer.IsInitOk() { //第一次初始化
-		leafAlloc, err = s.repo.UpdateMaxIdAndGetLeafAlloc(ctx,key)
+		leafAlloc, err = s.repo.UpdateMaxIdAndGetLeafAlloc(ctx, key)
 		if err != nil {
-			log.Error("err %+v",err)
+			log.Error("err %+v", err)
 			return
 		}
 		buffer.Step = leafAlloc.Step
 		buffer.MinStep = leafAlloc.Step
 	} else if buffer.UpdateStamp == 0 { //没有更新过
-		leafAlloc, err = s.repo.UpdateMaxIdAndGetLeafAlloc(ctx,key)
-		if err != nil{
-			log.Error("err %+v",err)
+		leafAlloc, err = s.repo.UpdateMaxIdAndGetLeafAlloc(ctx, key)
+		if err != nil {
+			log.Error("err %+v", err)
 			return
 		}
 		buffer.UpdateStamp = util.CurrentTimeMillis()
@@ -225,7 +225,7 @@ func (s *SegmentImpl) updateSegmentFromDB(ctx context.Context,key string, segmen
 			BizTag: key,
 			Step:   nextStep,
 		}
-		leafAlloc, err = s.repo.UpdateMaxIdByCustomStepAndGetLeafAlloc(ctx,tmp)
+		leafAlloc, err = s.repo.UpdateMaxIdByCustomStepAndGetLeafAlloc(ctx, tmp)
 		if err != nil {
 			return
 		}

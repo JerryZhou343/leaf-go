@@ -6,7 +6,7 @@ import (
 	"github.com/jerryzhou343/leaf-go/infra/conf"
 )
 
-func NewMySQL(c *conf.Config) (db *sql.DB,err error) {
+func NewMySQL(c *conf.Config) (db *sql.DB, err error) {
 	if c.SQL.QueryTimeout == 0 || c.SQL.ExecTimeout == 0 || c.SQL.TranTimeout == 0 {
 		panic("mysql must be set query/execute/transction timeout")
 	}
