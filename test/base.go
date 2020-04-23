@@ -3,8 +3,8 @@ package test
 import (
 	"context"
 	"fmt"
+	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/bilibili/kratos/pkg/net/rpc/warden"
-	leaf_go "github.com/jerryzhou343/leaf-go/genproto"
 	"google.golang.org/grpc"
 )
 

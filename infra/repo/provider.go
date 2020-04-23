@@ -1,9 +1,9 @@
 package repo
 
 import (
+	"github.com/JerryZhou343/leaf-go/infra/driver/mysql"
+	"github.com/JerryZhou343/leaf-go/infra/repo/segment"
 	"github.com/google/wire"
-	"github.com/jerryzhou343/leaf-go/infra/driver/mysql"
-	"github.com/jerryzhou343/leaf-go/infra/repo/segment"
 )
 
 var (

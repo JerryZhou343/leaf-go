@@ -2,7 +2,7 @@ package segment
 
 import (
 	"context"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment/entity"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment/entity"
 )
 
 type Repo interface {

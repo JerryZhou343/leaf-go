@@ -1,9 +1,9 @@
 package domain
 
 import (
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/snowflake"
 	"github.com/google/wire"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake"
 )
 
 var (

@@ -1,7 +1,7 @@
 package query
 
 import (
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment"
 )
 
 type AppQuery struct {

@@ -1,9 +1,9 @@
 package grpc
 
 import (
+	stub "github.com/JerryZhou343/leaf-go/genproto"
+	"github.com/JerryZhou343/leaf-go/infra/conf"
 	"github.com/bilibili/kratos/pkg/net/rpc/warden"
-	stub "github.com/jerryzhou343/leaf-go/genproto"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
 )
 
 // New new a grpc server.

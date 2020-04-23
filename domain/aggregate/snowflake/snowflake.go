@@ -1,10 +1,10 @@
 package snowflake
 
 import (
+	hold "github.com/JerryZhou343/leaf-go/domain/aggregate/snowflake/holder"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/snowflake/idgen"
+	"github.com/JerryZhou343/leaf-go/infra/conf"
 	"github.com/bilibili/kratos/pkg/net/ip"
-	hold "github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake/holder"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake/idgen"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
 	"strconv"
 	"strings"
 )

@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	leaf_go "github.com/jerryzhou343/leaf-go/genproto"
+	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"log"

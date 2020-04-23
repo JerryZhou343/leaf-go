@@ -6,15 +6,15 @@
 package di
 
 import (
-	"github.com/jerryzhou343/leaf-go/api/rpc"
-	"github.com/jerryzhou343/leaf-go/app/executor/cmd"
-	"github.com/jerryzhou343/leaf-go/app/executor/query"
-	segment2 "github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
-	"github.com/jerryzhou343/leaf-go/infra/driver/mysql"
-	"github.com/jerryzhou343/leaf-go/infra/repo/segment"
-	"github.com/jerryzhou343/leaf-go/infra/server/grpc"
+	"github.com/JerryZhou343/leaf-go/api/rpc"
+	"github.com/JerryZhou343/leaf-go/app/executor/cmd"
+	"github.com/JerryZhou343/leaf-go/app/executor/query"
+	segment2 "github.com/JerryZhou343/leaf-go/domain/aggregate/segment"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/snowflake"
+	"github.com/JerryZhou343/leaf-go/infra/conf"
+	"github.com/JerryZhou343/leaf-go/infra/driver/mysql"
+	"github.com/JerryZhou343/leaf-go/infra/repo/segment"
+	"github.com/JerryZhou343/leaf-go/infra/server/grpc"
 )
 
 // Injectors from wire.go:

@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"context"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/snowflake"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/snowflake"
+	"github.com/JerryZhou343/leaf-go/infra/conf"
 )
 
 type AppCmd struct {

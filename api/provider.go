@@ -1,10 +1,10 @@
 package api
 
 import (
+	"github.com/JerryZhou343/leaf-go/api/rpc"
+	"github.com/JerryZhou343/leaf-go/app"
+	stub "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/google/wire"
-	"github.com/jerryzhou343/leaf-go/api/rpc"
-	"github.com/jerryzhou343/leaf-go/app"
-	stub "github.com/jerryzhou343/leaf-go/genproto"
 )
 
 var (

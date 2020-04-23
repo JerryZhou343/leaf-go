@@ -4,10 +4,10 @@
 package di
 
 import (
+	"github.com/JerryZhou343/leaf-go/api"
+	"github.com/JerryZhou343/leaf-go/infra/conf"
+	"github.com/JerryZhou343/leaf-go/infra/server/grpc"
 	"github.com/google/wire"
-	"github.com/jerryzhou343/leaf-go/api"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
-	"github.com/jerryzhou343/leaf-go/infra/server/grpc"
 )
 
 func InitApp() (*App, func(), error) {

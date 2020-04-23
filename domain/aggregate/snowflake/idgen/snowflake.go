@@ -1,8 +1,8 @@
 package idgen
 
 import (
-	"github.com/jerryzhou343/leaf-go/domain/util"
-	stub "github.com/jerryzhou343/leaf-go/genproto"
+	"github.com/JerryZhou343/leaf-go/domain/util"
+	stub "github.com/JerryZhou343/leaf-go/genproto"
 	"math/rand"
 	"time"
 )

@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 	"fmt"
-	leaf_go "github.com/jerryzhou343/leaf-go/genproto"
+	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"google.golang.org/grpc"
 	"testing"
 	"time"

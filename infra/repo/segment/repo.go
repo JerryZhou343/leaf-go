@@ -2,10 +2,10 @@ package segment
 
 import (
 	"context"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment/entity"
 	"github.com/bilibili/kratos/pkg/database/sql"
 	"github.com/bilibili/kratos/pkg/log"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment/entity"
 	"time"
 )
 

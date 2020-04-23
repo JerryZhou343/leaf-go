@@ -1,9 +1,9 @@
 package mysql
 
 import (
+	"github.com/JerryZhou343/leaf-go/infra/conf"
 	"github.com/bilibili/kratos/pkg/database/sql"
 	"github.com/bilibili/kratos/pkg/log"
-	"github.com/jerryzhou343/leaf-go/infra/conf"
 )
 
 func NewMySQL(c *conf.Config) (db *sql.DB, err error) {

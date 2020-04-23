@@ -2,10 +2,10 @@ package rpc
 
 import (
 	"context"
+	"github.com/JerryZhou343/leaf-go/app/executor/cmd"
+	"github.com/JerryZhou343/leaf-go/app/executor/query"
+	stub "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/golang/protobuf/ptypes/empty"
-	"github.com/jerryzhou343/leaf-go/app/executor/cmd"
-	"github.com/jerryzhou343/leaf-go/app/executor/query"
-	stub "github.com/jerryzhou343/leaf-go/genproto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -2,10 +2,10 @@ package segment
 
 import (
 	"context"
+	"github.com/JerryZhou343/leaf-go/domain/aggregate/segment/entity"
+	"github.com/JerryZhou343/leaf-go/domain/util"
+	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/bilibili/kratos/pkg/log"
-	"github.com/jerryzhou343/leaf-go/domain/aggregate/segment/entity"
-	"github.com/jerryzhou343/leaf-go/domain/util"
-	leaf_go "github.com/jerryzhou343/leaf-go/genproto"
 	"sync"
 	"time"
 )

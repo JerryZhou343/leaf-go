@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
+	"github.com/JerryZhou343/leaf-go/di"
 	"github.com/bilibili/kratos/pkg/conf/paladin"
 	"github.com/bilibili/kratos/pkg/log"
-	"github.com/jerryzhou343/leaf-go/di"
 	"os"
 	"os/signal"
 	"syscall"
