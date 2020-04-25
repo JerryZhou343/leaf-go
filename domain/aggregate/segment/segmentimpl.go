@@ -117,14 +117,17 @@ func (s *SegmentImpl) Get(ctx context.Context, key string) (int64, error) {
 	}
 	if buffer, ok := s.cache[key]; ok {
 		if !buffer.IsInitOk() {
-			func() {
+			func(buffer *entity.SegmentBuffer) {
 				s.lock.Lock()
 				defer s.lock.Unlock()
-				err := s.updateSegmentFromDB(ctx, key, buffer.GetCurrent())
-				if err == nil {
-					buffer.SetInitOK(true)
+				if !buffer.IsInitOk() {
+					err := s.updateSegmentFromDB(ctx, key, buffer.GetCurrent())
+					if err == nil {
+						buffer.SetInitOK(true)
+					}
 				}
-			}()
+
+			}(buffer)
 
 		}
 		return s.getIdFromSegmentBuffer(ctx, s.cache[key])
