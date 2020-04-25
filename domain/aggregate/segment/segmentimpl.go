@@ -6,7 +6,6 @@ import (
 	"github.com/JerryZhou343/leaf-go/domain/util"
 	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/bilibili/kratos/pkg/log"
-	"sync"
 	"time"
 )
 
@@ -19,13 +18,13 @@ type SegmentImpl struct {
 	cache  map[string]*entity.SegmentBuffer
 	repo   Repo
 	initOK bool
-	lock   *sync.Mutex
+	//lock   *sync.Mutex
 }
 
 func NewSegmentImpl(repo Repo) *SegmentImpl {
 	ret := &SegmentImpl{
-		repo:  repo,
-		lock:  &sync.Mutex{},
+		repo: repo,
+		//lock:  &sync.Mutex{},
 		cache: map[string]*entity.SegmentBuffer{},
 	}
 	ret.initOK = false
@@ -118,15 +117,14 @@ func (s *SegmentImpl) Get(ctx context.Context, key string) (int64, error) {
 	if buffer, ok := s.cache[key]; ok {
 		if !buffer.IsInitOk() {
 			func(buffer *entity.SegmentBuffer) {
-				s.lock.Lock()
-				defer s.lock.Unlock()
+				buffer.Lock.Lock()
+				defer buffer.Lock.Unlock()
 				if !buffer.IsInitOk() {
 					err := s.updateSegmentFromDB(ctx, key, buffer.GetCurrent())
 					if err == nil {
 						buffer.SetInitOK(true)
 					}
 				}
-
 			}(buffer)
 
 		}
