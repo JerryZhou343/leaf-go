@@ -146,13 +146,17 @@ func (s *SegmentImpl) getIdFromSegmentBuffer(ctx context.Context, buffer *entity
 			buffer.ThreadRunning.CAS(false, true) { //切换线程运行状态
 			go func() {
 				next := buffer.Segments[buffer.NextPos()]
-				updateErr := s.updateSegmentFromDB(ctx, buffer.Key, next)
+				ctx , cancel:= context.WithTimeout(context.Background(),1 * time.Second)
+				defer cancel()
+				updateErr := s.updateSegmentFromDB(ctx,buffer.Key, next)
 				if updateErr == nil {
 					buffer.Lock.Lock()
 					buffer.NextReady = true
+					buffer.ThreadRunning.Store(false)
 					buffer.Lock.Unlock()
+				}else{
+					buffer.ThreadRunning.Store(false)
 				}
-				buffer.ThreadRunning.Store(false)
 			}()
 		}
 
