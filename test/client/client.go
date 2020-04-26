@@ -60,6 +60,6 @@ func TestSegment(key string) {
 			set[rsp.Id] = struct{}{}
 		}
 	}
-
+	log.Printf("seq len [%v]",len(set))
 
 }
