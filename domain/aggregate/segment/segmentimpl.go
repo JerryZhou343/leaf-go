@@ -6,6 +6,7 @@ import (
 	"github.com/JerryZhou343/leaf-go/domain/util"
 	leaf_go "github.com/JerryZhou343/leaf-go/genproto"
 	"github.com/bilibili/kratos/pkg/log"
+	"sync"
 	"time"
 )
 
@@ -13,19 +14,17 @@ const (
 	MAX_STEP         = 1000000
 	SEGMENT_DURATION = 15 * time.Minute
 )
-
+//[string]*entity.SegmentBuffer
 type SegmentImpl struct {
-	cache  map[string]*entity.SegmentBuffer
+	cache  sync.Map
 	repo   Repo
 	initOK bool
-	//lock   *sync.Mutex
 }
 
 func NewSegmentImpl(repo Repo) *SegmentImpl {
 	ret := &SegmentImpl{
 		repo: repo,
-		//lock:  &sync.Mutex{},
-		cache: map[string]*entity.SegmentBuffer{},
+		cache: sync.Map{},
 	}
 	ret.initOK = false
 	return ret
@@ -63,10 +62,12 @@ func (s *SegmentImpl) updateCacheFromDB() (err error) {
 	}
 
 	//当前已经缓存tag
-	for k, _ := range s.cache {
-		cacheTagsSet[k] = struct{}{}
-		removeTagsSet[k] = struct{}{}
-	}
+	s.cache.Range(func(key, value interface{}) bool {
+		cacheTagsSet[key.(string)] = struct{}{}
+		removeTagsSet[key.(string)] = struct{}{}
+		return true
+	})
+
 
 	//插入新tag
 	//1) 移除已经包含的，留下待添加到cache的
@@ -82,7 +83,7 @@ func (s *SegmentImpl) updateCacheFromDB() (err error) {
 		segment.Value.Store(0)
 		segment.Max.Store(0)
 		segment.Step.Store(0)
-		s.cache[k] = buffer
+		s.cache.Store(k,buffer)
 	}
 
 	//cache中已经失效的tags从cache中删除
@@ -94,7 +95,7 @@ func (s *SegmentImpl) updateCacheFromDB() (err error) {
 	}
 	//2)remove
 	for tag, _ := range removeTagsSet {
-		delete(s.cache, tag)
+		s.cache.Delete(tag)
 	}
 	return nil
 }
@@ -114,8 +115,8 @@ func (s *SegmentImpl) Get(ctx context.Context, key string) (int64, error) {
 	if !s.initOK {
 		return 0, leaf_go.ID_ID_CACHE_INIT_FALSE
 	}
-	if buffer, ok := s.cache[key]; ok {
-		if !buffer.IsInitOk() {
+	if buffer, ok := s.cache.Load(key); ok {
+		if !buffer.(*entity.SegmentBuffer).IsInitOk() {
 			func(buffer *entity.SegmentBuffer) {
 				buffer.Lock.Lock()
 				defer buffer.Lock.Unlock()
@@ -125,10 +126,11 @@ func (s *SegmentImpl) Get(ctx context.Context, key string) (int64, error) {
 						buffer.SetInitOK(true)
 					}
 				}
-			}(buffer)
+			}(buffer.(*entity.SegmentBuffer))
 
 		}
-		return s.getIdFromSegmentBuffer(ctx, s.cache[key])
+		buffer,_ := s.cache.Load(key)
+		return s.getIdFromSegmentBuffer(ctx, buffer.(*entity.SegmentBuffer))
 	}
 	return 0, leaf_go.ID_KEY_NOT_EXISTS
 }
