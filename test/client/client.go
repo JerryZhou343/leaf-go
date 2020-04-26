@@ -47,7 +47,8 @@ func TestSegment(key string) {
 		fmt.Printf("time cost [%+v]", time.Now().Sub(begin).Seconds())
 	}(time.Now())
 	for i := 0; i < 100000; i++ {
-		rsp, err = client.GetSegment(context.Background(), req)
+		ctx,_ := context.WithTimeout(context.Background(), 5 * time.Second)
+		rsp, err = client.GetSegment(ctx, req)
 		if err != nil {
 			log.Printf("err %+v", err)
 			break
@@ -59,5 +60,6 @@ func TestSegment(key string) {
 			set[rsp.Id] = struct{}{}
 		}
 	}
+
 
 }
